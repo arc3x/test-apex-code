@@ -3,5 +3,5 @@
     <apiVersion>36.0</apiVersion>
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
-    <label>ILP</label>
+    <label>AccountsContactsAngular</label>
 </ApexPage>

@@ -1,0 +1,79 @@
+<apex:page controller="AccountsContacts" showHeader="true" sidebar="true">
+
+	<apex:form>
+		<apex:pageBlock>
+		  	<apex:pageBlockTable value="{!newContact}" var="v">
+		  		<apex:column headerValue="Account">
+		        	<apex:selectList value="{!newContactAccount}" multiselect="false" size="1">
+			            <apex:selectOptions value="{!AccountOptions}"/>
+			        </apex:selectList>
+		        </apex:column>		       
+		  		<apex:column headerValue="First Name">
+		        	<apex:inputField value="{!newContact.FirstName}"/>
+		        </apex:column>
+		        <apex:column headerValue="Last Name">
+		        	<apex:inputField value="{!newContact.LastName}"/>
+		        </apex:column>
+		        <apex:column headerValue="Phone">
+		        	<apex:inputField value="{!newContact.Phone}"/>
+		        </apex:column>
+		        <apex:column headerValue="Email">
+		        	<apex:inputField value="{!newContact.email}"/>
+		        </apex:column>
+		        <apex:column headerValue="Options">
+		        	<apex:commandLink action="{!createContactInfo}" value="Create">
+		        		<apex:param value="{!newContact.Id}"/>		
+		        		<apex:param value="{!newContact.FirstName}"/>
+		        		<apex:param value="{!newContact.LastName}"/>
+		        		<apex:param value="{!newContact.Phone}"/>
+		        		<apex:param value="{!newContact.Email}"/>
+	        		</apex:commandLink>
+		        </apex:column>				       
+		    </apex:pageBlockTable>
+	    </apex:pageBlock>
+	</apex:form>
+
+	<apex:form>	
+		<apex:selectList value="{!SelectedAccount}" multiselect="false" size="1">
+            <apex:selectOptions value="{!AccountOptions}"/>
+        </apex:selectList>
+		<apex:commandButton action="{!loadContactInfo}" id="loadContactInfo" value="Get Contact Info"/>		
+  	</apex:form>
+
+  	<apex:outputPanel id="contactList">
+      	<apex:outputPanel rendered="{!doneSearch}">
+      		<apex:form>
+      			<apex:pageBlock>
+				  	<apex:pageBlockTable value="{!contacts}" var="contact">
+				  		<apex:column headerValue="First Name">
+				        	<apex:inputField value="{!contact.FirstName}"/>
+				        </apex:column>
+				        <apex:column headerValue="Last Name">
+				        	<apex:inputField value="{!contact.LastName}"/>
+				        </apex:column>
+				        <apex:column headerValue="Phone">
+				        	<apex:inputField value="{!contact.Phone}"/>
+				        </apex:column>
+				        <apex:column headerValue="Email">
+				        	<apex:inputField value="{!contact.email}"/>
+				        </apex:column>
+				        <apex:column headerValue="Options">
+				        	<apex:commandLink action="{!updateContactInfo}" value="Update">
+				        		<apex:param value="{!contact.Id}"/>		
+				        		<apex:param value="{!contact.FirstName}"/>
+				        		<apex:param value="{!contact.LastName}"/>
+				        		<apex:param value="{!contact.Phone}"/>
+				        		<apex:param value="{!contact.Email}"/>
+			        		</apex:commandLink>&nbsp;
+			        		<apex:commandLink action="{!deleteContactInfo}" value="Delete" onclick="return confirm('Are you sure?');">
+				        		<apex:param name="contactId" value="{!contact.id}"/>
+			        		</apex:commandLink>
+				        </apex:column>				       
+				    </apex:pageBlockTable>
+			    </apex:pageBlock>
+		    </apex:form>
+      	</apex:outputPanel>
+	</apex:outputPanel>
+  	
+
+</apex:page>

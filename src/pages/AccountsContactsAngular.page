@@ -1,0 +1,176 @@
+<apex:page controller="AccountsContactsAngular" showHeader="true" sidebar="true">
+	<html ng-app="myApp">
+		<head>
+			<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+         
+		</head>
+
+		<body ng-controller="AccountsContactsController">
+			<div class="container">
+
+				<div class="row">
+					<div class="col-sm-8 col-sm-offset-1">						
+						<h1>Add Contact</h1>
+						<table class="table">
+							<tr>
+								<th>Account</th>
+								<th>First Name</th>
+								<th>Last Name</th>
+								<th>Email Name</th>
+								<th>Phone Name</th>
+								<th>Options</th>
+							</tr>
+							<tr>				
+								<td>
+									<select ng-options="item as item.Name for item in accounts track by item.Id" ng-model="newContact.AccountId"></select>
+								</td>				
+								<td>
+									<input type="text" ng-model="newContact.FirstName"/>									
+								</td>
+								<td>
+									<input type="text" ng-model="newContact.LastName"/>									
+								</td>
+								<td>
+									<input type="text" ng-model="newContact.Email"/>									
+								</td>
+								<td>
+									<input type="text" ng-model="newContact.Phone"/>									
+								</td>
+								<td>
+									<button ng-click="createContact(newContact)" type="button" class="btn btn-success">
+			                            Create
+			                        </button>									
+								</td>
+							</tr>
+						</table>
+					
+					</div>
+				</div>	
+				
+
+				<div class="row" ng-show="showAccountList">
+					<div class="col-sm-8 col-sm-offset-1 text-left align-left">						
+						<select ng-options="item as item.Name for item in accounts track by item.Id" ng-model="selectedAccount"></select>
+						<button ng-click="getContacts()" type="button" class="btn btn-success">
+                            Get Contacts
+                        </button>
+					</div>
+				</div>		
+
+				<div class="row" ng-show="showContactList">
+					<div class="col-sm-8 col-sm-offset-1">						
+						<table class="table">
+							<tr>
+								<th>First Name</th>
+								<th>Last Name</th>
+								<th>Email Name</th>
+								<th>Phone Name</th>
+								<th>Options</th>
+							</tr>
+							<tr ng-repeat="contact in contacts">								
+								<td>
+									<input type="text" ng-model="contact.FirstName"/>									
+								</td>
+								<td>
+									<input type="text" ng-model="contact.LastName"/>									
+								</td>
+								<td>
+									<input type="text" ng-model="contact.Email"/>									
+								</td>
+								<td>
+									<input type="text" ng-model="contact.Phone"/>									
+								</td>
+								<td>
+									<button ng-click="updateContact(contact)" type="button" class="btn btn-success">
+			                            Save
+			                        </button>
+									<button ng-click="deleteContact(contact)" type="button" class="btn btn-success">
+			                            Delete
+			                        </button>		                        
+								</td>
+							</tr>
+						</table>
+					
+					</div>
+				</div>	
+
+			</div>
+			
+
+
+
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+        	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+        	<script type="text/javascript">
+        		angular.module('myApp', [])
+    				.controller('AccountsContactsController', ['$scope','$http', function($scope,$http) { 			
+    					$scope.accounts = null;
+    					$scope.selectedAccount = null;    					
+    					$scope.showAccountList = false;
+    					$scope.contacts = null;
+    					$scope.showContactList = false;
+    					$scope.newContact = {};
+
+        				$scope.getAccounts = function() {
+        					AccountsContactsAngular.getAccountOptions(function(data, status) {        						
+        						$scope.$apply(function() {
+        							$scope.accounts = JSON.parse(data.replace(/(&quot\;)/g,"\""));        				
+        							$scope.showAccountList = true;
+        						});
+        					});
+        					
+        				}  
+
+        				$scope.getContacts = function() {
+        					console.log($scope.selectedAccount);
+        					AccountsContactsAngular.getContactsByAccount($scope.selectedAccount.Id, function(data, status) {
+        						//console.log(data.replace(/(&quot\;)/g,"\""));
+        						$scope.$apply(function() {
+        							//console.log(data);
+        							$scope.contacts = JSON.parse(data.replace(/(&quot\;)/g,"\""));      
+        							//console.log($scope.contacts);
+        							$scope.showContactList = true;
+        						});
+        						
+        					})
+        				}
+
+        				$scope.updateContact = function(contact) {        					
+        					AccountsContactsAngular.updateContact(JSON.stringify(contact), function(data, status) {});
+        				}      
+
+        				$scope.createContact = function(contact) {
+        					contact.AccountId=contact.AccountId.Id;
+        					console.log(contact);
+        					AccountsContactsAngular.createContact(JSON.stringify(contact), function(data, status) {
+        						$scope.$apply(function() {
+        							$scope.getContacts();
+        						});
+        					});
+        				}
+
+        				$scope.deleteContact = function(contact) {
+        					console.log(contact);
+        					AccountsContactsAngular.deleteContact(JSON.stringify(contact), function(data, status) {
+        						$scope.$apply(function() {
+        							$scope.getContacts();
+        						});
+        					});
+        				}
+
+        				$scope.getAccounts();
+
+    				}]);
+
+
+
+        	</script>
+		</body>
+
+
+	</html>
+
+
+
+</apex:page>
