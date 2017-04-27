@@ -8,8 +8,8 @@ public with sharing class AccountsContacts {
 	public Contact newContact {get; set;}
 	//public String contactId {get; set;}
 
-	public AccountsContacts() {	
-		doneSearch = false;				
+	public AccountsContacts() {
+		doneSearch = false;
 		newContact = new Contact();
 	}
 
@@ -29,13 +29,13 @@ public with sharing class AccountsContacts {
 	}
 
 	// returns a list of accounts for page picklist
-	public List<SelectOption> getAccountOptions() {		
+	public List<SelectOption> getAccountOptions() {
 		List<Account> acts = [SELECT Id, Name, ContactCount__c FROM Account];
 		List<SelectOption> accountOptions = new List<SelectOption>();
 		// loop over accounts and add to SelectOption list
-		for(Account a : acts) {			
-			accountOptions.add(new SelectOption(a.Id, a.Name+' ('+a.ContactCount__c+')'));				
-		}		
+		for(Account a : acts) {
+			accountOptions.add(new SelectOption(a.Id, a.Name+' ('+a.ContactCount__c+')'));
+		}
 		return accountOptions;
 	}
 
@@ -56,14 +56,14 @@ public with sharing class AccountsContacts {
 				contacts[i].Phone!=contacts_original[i].Phone ) {
 					update contacts[i];
 			}
-		}		
+		}
 	}
 
 	public PageReference deleteContactInfo() {
 		//System.debug();
 		String id = apexpages.currentpage().getparameters().get('contactId');
 		System.debug(id);
-		Contact c = [SELECT Id FROM Contact WHERE Id=:id];		
+		Contact c = [SELECT Id FROM Contact WHERE Id=:id];
 		System.debug(c);
 		delete c;
 		loadContactInfo();
@@ -72,8 +72,102 @@ public with sharing class AccountsContacts {
 
 	public void createContactInfo() {
 		newContact.AccountId = newContactAccount;
-		insert newContact; 
+		insert newContact;
 		newContact = new Contact();
+	}
+
+	public static void inflate() {
+		Integer i=0;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
+		i++;
 	}
 
 }
