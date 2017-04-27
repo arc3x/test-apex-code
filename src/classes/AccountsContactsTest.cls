@@ -1,7 +1,9 @@
 @isTest
 private class AccountsContactsTest {
 	@isTest static void valid_test() {
-		return;
+		Account a = new Account();
+		a.Name='testAcnt';
+		insert a;
 	}
 
 	@isTest static void test_method_one() {
