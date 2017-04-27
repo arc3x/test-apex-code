@@ -43,9 +43,6 @@ private class AccountsContactsTest {
 		myCtrl.deleteContactInfo();
 
 		AccountsContacts.inflate();
-		Contact c = new Contact();
-		c.LastName = 'Test';
-		insert c;
 	}
 
 
