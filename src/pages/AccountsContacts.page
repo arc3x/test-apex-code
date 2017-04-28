@@ -8,7 +8,7 @@
 			            <apex:selectOptions value="{!AccountOptions}"/>
 			        </apex:selectList>
 		        </apex:column>
-		  		<apex:column headerValue="First Name FANCY">
+		  		<apex:column headerValue="First Name FANCY BIG LABEL CHANGE">
 		        	<apex:inputField value="{!newContact.FirstName}"/>
 		        </apex:column>
 		        <apex:column headerValue="Last Name">
